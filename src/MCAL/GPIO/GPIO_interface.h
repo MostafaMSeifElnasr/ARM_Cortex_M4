@@ -27,6 +27,10 @@
 #define GPIO_OUTPUT_HIGH             1
 #define GPIO_OUTPUT_LOW              0
 
+#define GPIO_INPUT_NOPULL            0b00
+#define GPIO_INPUT_PULLUP            0b01
+#define GPIO_INPUT_PULLDOWN          0b10
+
 #define GPIO_PIN0                    0
 #define GPIO_PIN1                    1
 #define GPIO_PIN2                    2
@@ -55,6 +59,6 @@ void GPIO_voidInitInputPin(u8 copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8PullMode
 void GPIO_voidSetOutputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8Value);
 
 /*this function is used to get the value of any input pin*/
-void GPIO_voidGetInputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID);
+u8 GPIO_voidGetInputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID);
 
 #endif /* MCAL_GPIO_GPIO_INTERFACE_H_ */

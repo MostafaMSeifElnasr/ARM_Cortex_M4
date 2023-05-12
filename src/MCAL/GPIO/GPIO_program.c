@@ -57,29 +57,85 @@ void GPIO_voidInitOutputPin(u8 copy_u8PortID, u8 Copy_u8PinID
 	}
 }
 
-//void GPIO_voidInitInputPin(u8 copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8PullMode)
-//{
-//	GPIOA->IDR=1;
-//}
+void GPIO_voidInitInputPin(u8 copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8PullMode)
+{
+	/*switch the PORT ID*/
+	switch(copy_u8PortID)
+	{
+	case GPIO_PORTA:
+		/*Set the direction of pin to be input (Bit Masking)*/
+		/*clear the required MODER pins*/
+		GPIOA->MODER &= ~(0b11<<(Copy_u8PinID*2));
+		/*set pin mode in MODER (output)*/
+		GPIOA->MODER |= (0b00<<(Copy_u8PinID*2));
+
+		/*Set pull-up or pull-down*/
+		/*clear PUPDR pins*/
+		GPIOA->PUPDR &= ~(0b11<<(Copy_u8PinID*2));
+		/*set PUPDR values*/
+		GPIOA->PUPDR |= (Copy_u8PullMode<<(Copy_u8PinID*2));
+		break;
+	case GPIO_PORTB:
+		/*Set the direction of pin to be input (Bit Masking)*/
+		/*clear the required MODER pins*/
+		GPIOA->MODER &= ~(0b11<<(Copy_u8PinID*2));
+		/*set pin mode in MODER (output)*/
+		GPIOA->MODER |= (0b00<<(Copy_u8PinID*2));
+
+		/*Set pull-up or pull-down*/
+		/*clear PUPDR pins*/
+		GPIOA->PUPDR &= ~(0b11<<(Copy_u8PinID*2));
+		/*set PUPDR values*/
+		GPIOA->PUPDR |= (Copy_u8PullMode<<(Copy_u8PinID*2));
+		break;
+	case GPIO_PORTC:
+		/*Set the direction of pin to be input (Bit Masking)*/
+		/*clear the required MODER pins*/
+		GPIOA->MODER &= ~(0b11<<(Copy_u8PinID*2));
+		/*set pin mode in MODER (output)*/
+		GPIOA->MODER |= (0b00<<(Copy_u8PinID*2));
+
+		/*Set pull-up or pull-down*/
+		/*clear PUPDR pins*/
+		GPIOA->PUPDR &= ~(0b11<<(Copy_u8PinID*2));
+		/*set PUPDR values*/
+		GPIOA->PUPDR |= (Copy_u8PullMode<<(Copy_u8PinID*2));
+		break;
+	}
+}
 
 void GPIO_voidSetOutputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID, u8 Copy_u8Value)
 {
 	/*switch the PORT ID*/
-		switch(copy_u8PortID)
-		{
-		case GPIO_PORTA:
-			WRT_BIT(GPIOA->ODR, Copy_u8PinID, Copy_u8Value);
-			break;
-		case GPIO_PORTB:
-			WRT_BIT(GPIOB->ODR, Copy_u8PinID, Copy_u8Value);
-			break;
-		case GPIO_PORTC:
-			WRT_BIT(GPIOC->ODR, Copy_u8PinID, Copy_u8Value);
-			break;
-		}
+	switch(copy_u8PortID)
+	{
+	case GPIO_PORTA:
+		WRT_BIT(GPIOA->ODR, Copy_u8PinID, Copy_u8Value);
+		break;
+	case GPIO_PORTB:
+		WRT_BIT(GPIOB->ODR, Copy_u8PinID, Copy_u8Value);
+		break;
+	case GPIO_PORTC:
+		WRT_BIT(GPIOC->ODR, Copy_u8PinID, Copy_u8Value);
+		break;
+	}
 }
 
-//void GPIO_voidGetInputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID)
-//{
-//
-//}
+u8 GPIO_voidGetInputPinValue(u8 copy_u8PortID, u8 Copy_u8PinID)
+{
+	u8 Local_u8PinValue = 0;
+	/*switch the PORT ID*/
+	switch(copy_u8PortID)
+	{
+	case GPIO_PORTA:
+		Local_u8PinValue = GET_BIT(GPIOA->IDR, Copy_u8PinID);
+		break;
+	case GPIO_PORTB:
+		Local_u8PinValue = GET_BIT(GPIOB->IDR, Copy_u8PinID);
+		break;
+	case GPIO_PORTC:
+		Local_u8PinValue = GET_BIT(GPIOC->IDR, Copy_u8PinID);
+		break;
+	}
+	return Local_u8PinValue;
+}
